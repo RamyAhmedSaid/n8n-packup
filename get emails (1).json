@@ -1,0 +1,286 @@
+{
+  "name": "get emails",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk",
+          "mode": "list",
+          "cachedResultName": "Facebook Followers Scraper",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 593492353,
+          "mode": "list",
+          "cachedResultName": "Sheet4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit#gid=593492353"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -224,
+        112
+      ],
+      "id": "56fa1e27-0e33-4592-acb9-c1546b334328",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6S5wAbjP5wjLx0uh",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        112
+      ],
+      "id": "f806eb61-db84-4713-9e6d-fee8e71f7ef6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"Facebook_Profile_URL\": [ \"{{ $json[\"FacebookURL\"] }}\" ]\n}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 30000
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        320,
+        176
+      ],
+      "id": "4aca39a8-0276-4d14-aaee-4aebcee33d62",
+      "name": "HTTP Request",
+      "retryOnFail": false,
+      "maxTries": 5,
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk",
+          "mode": "list",
+          "cachedResultName": "Facebook Followers Scraper",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 593492353,
+          "mode": "list",
+          "cachedResultName": "Sheet4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit#gid=593492353"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": 0
+          },
+          "matchingColumns": [
+            "Gmail"
+          ],
+          "schema": [
+            {
+              "id": "FacebookURL",
+              "displayName": "FacebookURL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Info2",
+              "displayName": "Info2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "PageName",
+              "displayName": "PageName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PageURL",
+              "displayName": "PageURL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Intro",
+              "displayName": "Intro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Gmail",
+              "displayName": "Gmail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        928,
+        336
+      ],
+      "id": "139af615-625d-46a1-8f1c-c0f34ae5483b",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6S5wAbjP5wjLx0uh",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "={{ $json.Profile_Link }}",
+              "field2": "={{ $('Get row(s) in sheet').item.json.FacebookURL }}"
+            }
+          ]
+        },
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        928,
+        480
+      ],
+      "id": "3ea23878-ae9c-43e1-9530-03cdfcf9b8a5",
+      "name": "Merge"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "92eb9ea7-8516-45aa-b15d-bb232a29b24a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "772c1f159cecd9c01bd1fbf3c28a2cac100b3d715b51d2cc276d211d5097ba9f"
+  },
+  "id": "kMDC8Y4mFc5IbQGH",
+  "tags": []
+}

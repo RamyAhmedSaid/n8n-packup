@@ -1,0 +1,523 @@
+{
+  "name": "Google Sheets New Row Trigger Example",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk",
+          "mode": "list",
+          "cachedResultName": "Facebook Followers Scraper",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit#gid=0"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7657a5ec-f4a3-492a-8a4f-83fd7fa96813",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "2FoGtQ379Ewn8ObA",
+          "name": "Google Sheets Trigger account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n    \"resultsLimit\": 50,\n    \"startUrls\": [\n        {\n            \"url\": \"https://www.facebook.com/mohmfurnitureEgypt\"\n        }\n    ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        192,
+        0
+      ],
+      "id": "d4b70031-3f90-443f-abef-841ccfcbed42",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "title",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": "url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        416,
+        0
+      ],
+      "id": "80ca68db-e008-4169-a758-9bbf1eeceb67",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk",
+          "mode": "list",
+          "cachedResultName": "Facebook Followers Scraper",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 280029157,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit#gid=280029157"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "URL": "={{ $json.url }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Facebook URL",
+              "displayName": "Facebook URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Follow Type",
+              "displayName": "Follow Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Profile Image URL",
+              "displayName": "Profile Image URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Bio",
+              "displayName": "Bio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        624,
+        0
+      ],
+      "id": "1560fa86-3d6f-49e3-ae65-68f0eff6dc00",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6S5wAbjP5wjLx0uh",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"startUrls\": {{JSON.stringify($json.startUrls)}}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1296,
+        0
+      ],
+      "id": "a2521f48-ad28-4867-a38d-5079c6afcec3",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "URL",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        832,
+        0
+      ],
+      "id": "e12ae9af-dab7-439d-bccb-d172af191926",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// جمع كل الـ URLs من الـ input\nconst allUrls = $input.all().map(item => ({\n    url: item.json.URL\n}));\n\n// إرجاع object واحد فيه كل الـ URLs\nreturn [{\n    json: {\n        startUrls: allUrls\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "a3a74310-4fc7-4247-957c-78407c8d5f39",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "facebookUrl",
+        "include": "selectedOtherFields",
+        "fieldsToInclude": "info, title, pageName, pageUrl, intro",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        0
+      ],
+      "id": "3b8ce186-df8f-4b7b-95fd-e17cdd1385b0",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk",
+          "mode": "list",
+          "cachedResultName": "Facebook Followers Scraper",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 593492353,
+          "mode": "list",
+          "cachedResultName": "Sheet4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit#gid=593492353"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "FacebookURL": "={{ $json.facebookUrl }}",
+            "Info2": "={{ $json.info }}",
+            "Title": "={{ $json.title }}",
+            "PageName": "={{ $json.pageName }}",
+            "PageURL": "={{ $json.pageUrl }}",
+            "Intro": "={{ $json.intro }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "FacebookURL",
+              "displayName": "FacebookURL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Info2",
+              "displayName": "Info2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PageName",
+              "displayName": "PageName",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PageURL",
+              "displayName": "PageURL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Intro",
+              "displayName": "Intro",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1664,
+        0
+      ],
+      "id": "6221fd8d-ef3f-4af3-812b-c9b67ceeabd3",
+      "name": "Append row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6S5wAbjP5wjLx0uh",
+          "name": "Google Sheets account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"Facebook_Profile_URL\": \"={{$json.FacebookURL}}\"\n}",
+        "options": {
+          "timeout": 600000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1664,
+        208
+      ],
+      "id": "b4cceb85-76cb-4702-a893-db10bad6e736",
+      "name": "HTTP Request2",
+      "executeOnce": true,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk",
+          "mode": "list",
+          "cachedResultName": "Facebook Followers Scraper",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 593492353,
+          "mode": "list",
+          "cachedResultName": "Sheet4",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1uPam3CbiV71eMA50ccEdhW-wEHIh-Jj2bhx32WwNYsk/edit#gid=593492353"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1408,
+        272
+      ],
+      "id": "13bfc453-d2e2-4530-8889-03e1746af42c",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "6S5wAbjP5wjLx0uh",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        []
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f279253d-6b0e-4fd5-8697-64d4cfdcf1d1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "772c1f159cecd9c01bd1fbf3c28a2cac100b3d715b51d2cc276d211d5097ba9f"
+  },
+  "id": "2xm0oh2SQyGN6k7c",
+  "tags": []
+}
